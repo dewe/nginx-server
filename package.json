@@ -1,6 +1,6 @@
 {
   "name": "nginx-server",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "description": "Utility for controlling an Nginx server",
   "main": "index.js",
   "scripts": {
