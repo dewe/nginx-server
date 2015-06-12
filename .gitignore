@@ -2,10 +2,7 @@
 **/.DS_Store
 
 # idea
-**/.idea/workspace.xml
-**/.idea/tasks.xml
-**/.idea/*.iws
-**/.idea/dictionaries
+**/.idea
 
 # project files
 node_modules
