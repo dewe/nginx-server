@@ -7,7 +7,7 @@ var path = require('path'),
     async = require('async'),
     fse = require('fs-extra');
 
-var nginx = require('../lib/nginx');
+var nginx = require('..');
 
 describe('Nginx test server', function () {
     var tempDir = 'tmp';//temp.mkdirSync('nginx_server_test');
