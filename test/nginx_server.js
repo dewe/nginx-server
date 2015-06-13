@@ -3,18 +3,18 @@
 
 var path = require('path'),
     assert = require('chai').assert,
-    temp = require('temp').track(),
     async = require('async'),
     fse = require('fs-extra');
 
 var nginx = require('..');
 
 describe('Nginx test server', function () {
-    var tempDir = 'tmp';//temp.mkdirSync('nginx_server_test');
+    var tempDir = 'tmp';
     var options = {
         config: path.resolve('test/stubs/nginx.conf'),
         prefix: path.resolve(tempDir),
-        log: console.log
+        pid: path.resolve(tempDir + '/nginx.pid')
+        //, log: console.log
     };
     var server = nginx(options);
 
@@ -23,26 +23,46 @@ describe('Nginx test server', function () {
 
     console.log(options);
 
+    it('requires option.config', function () {
+        assert.throws(function () {
+                nginx({})
+            },
+            /options.config/);
+    });
+
     it('start', function (done) {
-        server.start(done);
-        // assert on pid file
+        startAndCheck(done);
     });
 
     it('stop', function (done) {
-        server.stop(done);
-        // assert on pid file
+        stopAndCheck(done);
     });
 
     it('multiple start-stop', function (done) {
 
         async.series([
-            server.start,
-            server.stop,
-            server.start,
-            server.stop,
-            server.start,
-            server.stop
+            startAndCheck,
+            stopAndCheck,
+            startAndCheck,
+            stopAndCheck,
+            startAndCheck,
+            stopAndCheck,
+            startAndCheck,
+            stopAndCheck
         ], done);
     });
 
+    function startAndCheck(callback) {
+        server.start(function () {
+            assert.isTrue(fse.existsSync(options.pid));
+            callback();
+        });
+    }
+
+    function stopAndCheck(callback) {
+        server.stop(function () {
+            assert.isFalse(fse.existsSync(options.pid));
+            callback();
+        });
+    }
 });
