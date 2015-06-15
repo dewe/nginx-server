@@ -9,19 +9,17 @@ var path = require('path'),
 var nginx = require('..');
 
 describe('Nginx test server', function () {
-    var tempDir = 'tmp';
     var options = {
-        config: path.resolve('test/stubs/nginx.conf'),
-        prefix: path.resolve(tempDir),
-        pid: path.resolve(tempDir + '/nginx.pid')
-        //, log: console.log
+        config: 'test/stubs/nginx.conf',
+        prefix: 'tmp'
+        //config: path.resolve('test/stubs/nginx.conf'),
+        //prefix: path.resolve('tmp')
     };
     var server = nginx(options);
 
-    fse.ensureDirSync(tempDir);
-    fse.ensureFileSync(path.join(tempDir, 'logs/error.log'));
-
-    console.log(options);
+    // prep test
+    fse.emptyDirSync(options.prefix);
+    fse.ensureFileSync(path.join(options.prefix, 'logs/error.log'));
 
     it('requires option.config', function () {
         assert.throws(function () {
@@ -31,38 +29,24 @@ describe('Nginx test server', function () {
     });
 
     it('start', function (done) {
-        startAndCheck(done);
+        server.start(done);
     });
 
     it('stop', function (done) {
-        stopAndCheck(done);
+        server.stop(done);
     });
 
     it('multiple start-stop', function (done) {
 
         async.series([
-            startAndCheck,
-            stopAndCheck,
-            startAndCheck,
-            stopAndCheck,
-            startAndCheck,
-            stopAndCheck,
-            startAndCheck,
-            stopAndCheck
+            server.start,
+            server.stop,
+            server.start,
+            server.stop,
+            server.start,
+            server.stop,
+            server.start,
+            server.stop
         ], done);
     });
-
-    function startAndCheck(callback) {
-        server.start(function () {
-            assert.isTrue(fse.existsSync(options.pid));
-            callback();
-        });
-    }
-
-    function stopAndCheck(callback) {
-        server.stop(function () {
-            assert.isFalse(fse.existsSync(options.pid));
-            callback();
-        });
-    }
 });
