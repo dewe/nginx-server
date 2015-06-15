@@ -23,12 +23,12 @@ server.stop(function () {
 
 ## Options
 
-__config:__ Path to configuration file
+**config:** `string` Path to configuration file
 
-__prefix:__ Set nginx path prefix, i.e. a directory that will keep server files. 
+**prefix:** `string` Set nginx path prefix, i.e. a directory that will keep server files. 
 
-__globals:__ String array of global configuration directives.
+**globals:** `[string]` String array of global configuration directives.
 
-__command:__ Nginx executable (default: 'nginx').
+**command:** `string` Nginx executable (default: 'nginx').
 
-__log:__ Pass in function for logging nginx output. 
+**log:** `function` Pass in function for logging nginx output. 
