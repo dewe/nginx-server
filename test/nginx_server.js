@@ -8,18 +8,16 @@ var path = require('path'),
 
 var nginx = require('..');
 
-describe('Nginx test server', function () {
-    var options = {
-        config: 'test/stubs/nginx.conf',
-        prefix: 'tmp'
-        //config: path.resolve('test/stubs/nginx.conf'),
-        //prefix: path.resolve('tmp')
-    };
-    var server = nginx(options);
+var prefixDir = 'tmp';
+fse.emptyDirSync(prefixDir);
+fse.ensureFileSync(path.join(prefixDir, 'logs/error.log'));
 
-    // prep test
-    fse.emptyDirSync(options.prefix);
-    fse.ensureFileSync(path.join(options.prefix, 'logs/error.log'));
+
+describe('Nginx test server', function () {
+    var server = nginx({
+        config: 'test/stubs/nginx.conf',
+        prefix: prefixDir
+    });
 
     it('requires option.config', function () {
         assert.throws(function () {
