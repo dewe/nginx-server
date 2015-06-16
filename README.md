@@ -1,5 +1,6 @@
 # nginx-server
-Utility for starting and stopping an Nginx server.
+Utility for starting and stopping an Nginx server. Useful when testing an nginx configuration, having a 
+start and stop for each most tests.
 
 ## Example
 
@@ -23,12 +24,8 @@ server.stop(function () {
 
 ## Options
 
-**config:** `string` Path to configuration file
-
-**prefix:** `string` Set nginx path prefix, i.e. a directory that will keep server files. 
-
-**globals:** `[string]` String array of global configuration directives.
-
-**command:** `string` Nginx executable (default: 'nginx').
-
-**log:** `function` Pass in function for logging nginx output. 
+**config:** `string` Path to configuration file.  
+**prefix:** `string` Set nginx path prefix, i.e. a directory that will keep server files.   
+**globals:** `[string]` String array of global configuration directives.  
+**command:** `string` Nginx executable (default: 'nginx').  
+**log:** `function` Pass in function for logging nginx output.  

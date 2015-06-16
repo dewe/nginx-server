@@ -17,6 +17,7 @@ describe('Nginx test server', function () {
     var server = nginx({
         config: 'test/stubs/nginx.conf',
         prefix: prefixDir
+        //, log: console.log
     });
 
     it('requires option.config', function () {
