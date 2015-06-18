@@ -1,6 +1,6 @@
 # nginx-server
 Utility for starting and stopping an Nginx server. Useful when testing an nginx configuration, having a 
-start and stop for each most tests.
+start and stop for every test.
 
 ## Example
 
