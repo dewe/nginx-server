@@ -1,5 +1,5 @@
 # nginx-server
-Utility for starting and stopping an Nginx server. Useful when testing an nginx configuration, having a 
+Utility for starting and stopping an Nginx server. Useful when testing an nginx configuration, having a
 start and stop for every test.
 
 ## Example
@@ -8,7 +8,7 @@ start and stop for every test.
 var nginx = require('nginx-server');
 
 var options = {
-    config: '/Users/dewe/github/nginx-server/test/stubs/nginx.conf',
+    config: __dirname + '/test/stubs/nginx.conf',
 };
 
 var server = nginx(options);
