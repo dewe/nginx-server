@@ -51,13 +51,14 @@ describe('Nginx test server', function () {
         ], done);
   });
 
-  it.only('start callback is called only once', function (done) {
+  it('start callback is called only once', function (done) {
     var called = 0;
+
     server.start(() => {
       server.stop(() => called++);
     });
 
-    setTimeout(function () {
+    setTimeout(() => {
       assert.equal(called, 1);
       done();
     }, 100);
