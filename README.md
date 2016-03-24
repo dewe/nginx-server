@@ -29,3 +29,12 @@ server.stop(function () {
 **globals:** `[string]` String array of global configuration directives.  
 **command:** `string` Nginx executable (default: 'nginx').  
 **log:** `function` Pass in function for logging nginx output.  
+
+# Development
+
+## Run tests
+
+```
+docker build -f docker/Dockerfile.test -t test-nginx-server .
+docker run --rm -v $(pwd):/usr/src/app -it test-nginx-server
+```

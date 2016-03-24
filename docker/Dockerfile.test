@@ -1,0 +1,27 @@
+FROM node:5.9.0
+
+# Nginx installation
+ENV NGINX_VERSION 1.8.1-1~jessie
+
+RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
+	&& echo "deb http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list \
+	&& apt-get update \
+	&& apt-get install -y ca-certificates nginx=${NGINX_VERSION} gettext-base
+
+RUN mkdir -p /usr/src/app
+
+# Install packeges to a directory above the project. Modules will still be found
+# but won't be overridden when mounting the project directory for development.
+# Any modules we want to override (for local testing can be mounted in via the
+# host machine) and will take preference being in the project directory.
+WORKDIR /usr/src
+COPY package.json /usr/src/
+RUN npm install
+
+# Make all local package binaries available.
+ENV PATH ../node_modules/.bin:$PATH
+
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+
+CMD [ "npm", "test" ]

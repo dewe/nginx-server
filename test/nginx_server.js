@@ -14,10 +14,12 @@ fse.ensureFileSync(path.join(prefixDir, 'logs/error.log'));
 
 
 describe('Nginx test server', function () {
+  this.slow(500);
+
     var server = nginx({
         config: 'test/stubs/nginx.conf',
         prefix: prefixDir
-        //, log: console.log
+        // , log: console.log
     });
 
     it('requires option.config', function () {
