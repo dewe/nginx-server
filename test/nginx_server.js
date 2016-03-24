@@ -2,9 +2,9 @@
 'use strict';
 
 var path = require('path'),
-    assert = require('chai').assert,
-    async = require('async'),
-    fse = require('fs-extra');
+  assert = require('chai').assert,
+  async = require('async'),
+  fse = require('fs-extra');
 
 var nginx = require('..');
 
@@ -16,30 +16,30 @@ fse.ensureFileSync(path.join(prefixDir, 'logs/error.log'));
 describe('Nginx test server', function () {
   this.slow(500);
 
-    var server = nginx({
-        config: 'test/stubs/nginx.conf',
-        prefix: prefixDir
-        // , log: console.log
-    });
+  var server = nginx({
+    config: 'test/conf/nginx.conf',
+    prefix: prefixDir
+      // , log: console.log
+  });
 
-    it('requires option.config', function () {
-        assert.throws(function () {
-                nginx({})
-            },
-            /options.config/);
-    });
+  it('require option.config', function () {
+    assert.throws(function () {
+        nginx({})
+      },
+      /options.config/);
+  });
 
-    it('start', function (done) {
-        server.start(done);
-    });
+  it('start', function (done) {
+    server.start(done);
+  });
 
-    it('stop', function (done) {
-        server.stop(done);
-    });
+  it('stop', function (done) {
+    server.stop(done);
+  });
 
-    it('multiple start-stop', function (done) {
+  it('multiple start-stop', function (done) {
 
-        async.series([
+    async.series([
             server.start,
             server.stop,
             server.start,
@@ -49,5 +49,18 @@ describe('Nginx test server', function () {
             server.start,
             server.stop
         ], done);
+  });
+
+  it.only('start callback is called only once', function (done) {
+    var called = 0;
+    server.start(() => {
+      server.stop(() => called++);
     });
+
+    setTimeout(function () {
+      assert.equal(called, 1);
+      done();
+    }, 100);
+  });
+
 });
