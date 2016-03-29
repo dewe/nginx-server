@@ -8,7 +8,7 @@ start and stop for every test.
 var nginx = require('nginx-server');
 
 var options = {
-    config: __dirname + '/test/stubs/nginx.conf',
+    config: __dirname + '/test/conf/nginx.conf',
 };
 
 var server = nginx(options);
@@ -38,3 +38,9 @@ server.stop(function () {
 docker build -f docker/Dockerfile.test -t test-nginx-server .
 docker run --rm -v $(pwd):/usr/src/app -it test-nginx-server
 ```
+
+## Debug output
+For having debug output in the log, two things are required:
+
+* Have nginx configured to support debugging during the build: http://nginx.org/en/docs/debugging_log.html
+* Set environment variable `LOG_LEVEL=TRACE`.
