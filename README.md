@@ -1,4 +1,5 @@
 # nginx-server
+
 Utility for starting and stopping an Nginx server. Useful when testing an nginx configuration, having a
 start and stop for every test.
 
@@ -30,11 +31,11 @@ server.stop(function () {
 **command:** `string` Nginx executable (default: 'nginx').  
 **log:** `function` Pass in function for logging nginx output.  
 
-# Development
+## Development
 
-## Run tests
+### Run tests
 
-```
+```shell
 docker build -f docker/Dockerfile.test -t test-nginx-server .
 docker run --rm -v $(pwd):/usr/src/app -it test-nginx-server
 ```
