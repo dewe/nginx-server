@@ -41,6 +41,7 @@ docker run --rm -v $(pwd):/usr/src/app -it test-nginx-server
 ```
 
 ## Debug output
+
 For having debug output in the log, two things are required:
 
 * Have nginx configured to support debugging during the build: http://nginx.org/en/docs/debugging_log.html
